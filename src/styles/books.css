@@ -1,0 +1,177 @@
+/* Admin page styles */
+.admin-container {
+  max-width: 500px;
+  margin: 4em auto;
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+.admin-title {
+  font-size: 2em;
+  margin-bottom: 1em;
+  color: #181820;
+  text-align: center;
+}
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.admin-field label {
+  font-weight: bold;
+  color: #181820;
+}
+.admin-field input[type="text"],
+.admin-field input[type="file"] {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+.admin-btn {
+  padding: 0.5em 2em;
+  font-size: 1.1em;
+  background: tan;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.admin-btn:disabled {
+  background: #e0c9a6;
+  cursor: not-allowed;
+}
+.admin-btn:hover:not(:disabled) {
+  background: #e0b97a;
+}
+.admin-message {
+  margin-top: 1.5em;
+  color: green;
+  text-align: center;
+  font-weight: bold;
+}
+/* Book modal scrollable and paged styles */
+.book-scrollable {
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.book-pages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.book-page {
+  background: antiquewhite;
+  border-radius: 8px;
+  padding: 1.5em 1em 2.5em 1em;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  position: relative;
+}
+
+.book-page-number {
+  position: absolute;
+  bottom: 0.5em;
+  right: 1em;
+  font-size: 0.9em;
+  color: #888;
+}
+/* Modal overlay for book text */
+.book-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #181820;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  z-index: 1000;
+}
+
+.book-modal-content {
+  background: rgba(0, 0, 0, 0.397);
+  border-radius: 0;
+  padding: 2em 0 2em 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow-y: auto;
+  box-shadow: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book-modal-close {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  background: Tan;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  transition: background 0.2s;
+  z-index: 1100;
+}
+.book-modal-close:hover {
+  background: gary;
+}
+
+.book-modal-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 2em;
+  color: #111;
+}
+.books-container {
+  display: flex;
+  gap: 10em;
+  padding-left: 0em;
+  padding-right: 0em;
+}
+
+.books-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  margin: 10px;
+  gap: 4em;
+}
+
+.books-card {
+  width: 200px;
+  height: 300px;
+  border-radius: 10px;
+  margin: 10px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.books-card h2 {
+  color: black;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  font-size: 1.2rem;
+  text-align: center;
+}
