@@ -1,0 +1,79 @@
+.admin-cover-preview {
+  margin-top: 10px;
+  max-width: 120px;
+  max-height: 160px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.admin-container {
+  max-width: 420px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 32px 28px 24px 28px;
+}
+
+.admin-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: center;
+  color: #2d2d2d;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-field label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.admin-field input[type="text"],
+.admin-field input[type="password"],
+.admin-field input[type="file"] {
+  padding: 7px 10px;
+  border: 1px solid #d0d0d0;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #fafbfc;
+  color: #222;
+}
+
+.admin-btn {
+  background: tan;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.18s;
+}
+.admin-btn:disabled {
+  background: #bcd6fa;
+  cursor: not-allowed;
+}
+.admin-btn:not(:disabled):hover {
+  background: #2563eb;
+}
+
+.admin-message {
+  margin-top: 16px;
+  font-size: 1rem;
+  text-align: center;
+  color: #2563eb;
+}
