@@ -31,6 +31,10 @@ const Home = () => {
       <button>
         <a href="#/books">Start Reading</a>
       </button>
+      <br />
+      <button>
+        <a href="#/about">About the Author</a>
+      </button>
     </center>
   );
 };
