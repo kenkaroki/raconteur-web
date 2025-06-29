@@ -17,6 +17,7 @@ div{
     width:80%;
     margin-left: 08%;
     margin-top: 0%;
+    justify-content: space-between;
 }
 
 a{
@@ -28,9 +29,11 @@ a{
 
 p{
     font-size: large;
-    color: tan
+    color: black
 }
 li{
     font-size: larger;
+    color: black;
+
 }
 
