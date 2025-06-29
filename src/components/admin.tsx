@@ -1,8 +1,9 @@
 import * as React from "react";
 import "../styles/admin.css";
+import { baseUrl } from "../constants";
 
 interface Book {
-  id: number;
+  id: number | string;
   title: string;
   backgroundImage: string;
   text?: string;
@@ -13,7 +14,6 @@ const ADMIN_PASSWORD = "raconteur123";
 const Admin: React.FC = () => {
   const [title, setTitle] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
-  // Remove cover URL state, only use file
   const [coverFile, setCoverFile] = React.useState<File | null>(null);
   const [message, setMessage] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -21,7 +21,56 @@ const Admin: React.FC = () => {
   const [password, setPassword] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
   const [coverPreview, setCoverPreview] = React.useState<string | null>(null);
-  // Removed unused textPreview state
+  const [books, setBooks] = React.useState<Book[]>([]);
+  const [confirmDeleteId, setConfirmDeleteId] = React.useState<string | null>(
+    null
+  );
+  React.useEffect(() => {
+    // Try to fetch from backend, fallback to localStorage
+    fetch(`${baseUrl}/api/books`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) setBooks(data);
+      })
+      .catch(() => {
+        // fallback to localStorage
+        const stored = localStorage.getItem("booksList");
+        setBooks(stored ? JSON.parse(stored) : []);
+      });
+  }, [showForm, message]);
+
+  // Always send the id as a string to the server, regardless of length
+  const handleDelete = (id: number | string) => {
+    setConfirmDeleteId(String(id));
+  };
+
+  const confirmDelete = async () => {
+    if (!confirmDeleteId) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`${baseUrl}/api/books/${confirmDeleteId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.books) {
+          setBooks(data.books);
+          localStorage.setItem("booksList", JSON.stringify(data.books));
+          setMessage("Book deleted.");
+        } else {
+          setMessage("Book deleted from server.");
+        }
+      } else {
+        setMessage("Failed to delete book from server.");
+      }
+    } catch {
+      setMessage("Failed to delete book from server.");
+    }
+    setLoading(false);
+    setConfirmDeleteId(null);
+    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new Event("books-updated"));
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -59,7 +108,7 @@ const Admin: React.FC = () => {
     if (!coverFile) return "";
     const formData = new FormData();
     formData.append("file", coverFile);
-    const res = await fetch("http://localhost:5000/api/upload", {
+    const res = await fetch(`${baseUrl}/api/upload`, {
       method: "POST",
       body: formData,
     });
@@ -97,7 +146,7 @@ const Admin: React.FC = () => {
       // Notify other tabs
       window.dispatchEvent(new Event("storage"));
 
-      await fetch("http://localhost:5000/api/books", {
+      await fetch(`${baseUrl}/api/books`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, backgroundImage: coverUrl, text }),
@@ -131,6 +180,64 @@ const Admin: React.FC = () => {
         </form>
       ) : (
         <>
+          <h2
+            className="admin-title"
+            style={{ fontSize: "1.3rem", marginTop: 0 }}
+          >
+            Books List
+          </h2>
+          <div className="admin-books-list">
+            {books.length === 0 && (
+              <div
+                style={{ color: "#888", textAlign: "center", marginBottom: 16 }}
+              >
+                No books yet.
+              </div>
+            )}
+            {books.map((book) => (
+              <div className="admin-book-item" key={book.id}>
+                <img
+                  src={book.backgroundImage}
+                  alt="cover"
+                  className="admin-book-thumb"
+                />
+                <div className="admin-book-info">
+                  <div className="admin-book-title">{book.title}</div>
+                  <button
+                    className="admin-btn admin-delete-btn"
+                    onClick={() => handleDelete(book.id)}
+                    disabled={loading}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+            {confirmDeleteId !== null && (
+              <div className="admin-delete-confirm-overlay">
+                <div className="admin-delete-confirm-modal">
+                  <div style={{ marginBottom: 16 }}>
+                    Are you sure you want to delete this book?
+                  </div>
+                  <button
+                    className="admin-btn admin-delete-btn"
+                    onClick={confirmDelete}
+                    disabled={loading}
+                  >
+                    Yes, Delete
+                  </button>
+                  <button
+                    className="admin-btn"
+                    style={{ marginLeft: 10 }}
+                    onClick={() => setConfirmDeleteId(null)}
+                    disabled={loading}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           <h1 className="admin-title">Admin - Add New Book</h1>
           <form className="admin-form" onSubmit={handleSubmit}>
             <div className="admin-field">

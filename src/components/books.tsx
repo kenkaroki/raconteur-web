@@ -1,5 +1,6 @@
 import * as React from "react";
 import "../styles/books.css";
+import { baseUrl } from "../constants";
 
 interface Book {
   id: number;
@@ -62,9 +63,23 @@ const Books: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    fetch("https://a389-41-215-96-176.ngrok-free.app/api/books")
-      .then((res) => res.json())
-      .then(setBooksList);
+    const fetchBooks = () => {
+      fetch(`${baseUrl}/api/books`)
+        .then((res) => res.json())
+        .then(setBooksList)
+        .catch(() => {
+          // fallback to localStorage
+          const stored = localStorage.getItem("booksList");
+          setBooksList(stored ? JSON.parse(stored) : []);
+        });
+    };
+    fetchBooks();
+    // Listen for storage and custom book update events
+    const onBooksUpdated = () => fetchBooks();
+    window.addEventListener("books-updated", onBooksUpdated);
+    return () => {
+      window.removeEventListener("books-updated", onBooksUpdated);
+    };
   }, []);
 
   const handleClose = () => {

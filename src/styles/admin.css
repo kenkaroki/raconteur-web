@@ -1,3 +1,77 @@
+.admin-delete-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.admin-delete-confirm-modal {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.13);
+  padding: 32px 28px 24px 28px;
+  min-width: 280px;
+  text-align: center;
+}
+.admin-books-list {
+  margin-bottom: 28px;
+}
+.admin-book-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f7f7f7;
+  border-radius: 7px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+.admin-book-thumb {
+  width: 44px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  background: #eee;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+}
+.admin-book-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.admin-book-title {
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+.admin-delete-btn {
+  background: #e11d48;
+  color: #fff;
+  font-size: 0.98rem;
+  padding: 7px 16px;
+  border-radius: 5px;
+  margin: 0;
+  box-shadow: none;
+  transition: background 0.18s;
+}
+.admin-delete-btn:disabled {
+  background: #fca5a5;
+  cursor: not-allowed;
+}
+.admin-delete-btn:not(:disabled):hover {
+  background: #be123c;
+}
 .admin-cover-preview {
   margin-top: 10px;
   max-width: 120px;
