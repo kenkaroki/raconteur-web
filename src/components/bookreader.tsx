@@ -137,12 +137,12 @@ const BookReader: React.FC = () => {
                   fontSize: "1.08em",
                   background: "none",
                   boxSizing: "border-box",
-                  marginBottom: "2.2em",
+                  marginBottom: "3.2em",
                 }}
               >
                 {page}
               </pre>
-              <div className="book-page-number" style={{ marginTop: 0 }}>
+              <div className="book-page-number" style={{ marginTop: "1em" }}>
                 &nbsp;Page {idx + 1}
               </div>
             </div>
