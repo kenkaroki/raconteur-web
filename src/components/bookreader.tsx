@@ -68,6 +68,7 @@ const BookReader: React.FC = () => {
         alignItems: "center",
         padding: 0,
         margin: 0,
+        overflowX: "hidden",
       }}
     >
       <button
@@ -75,17 +76,32 @@ const BookReader: React.FC = () => {
           alignSelf: "flex-start",
           margin: "2em 0 1em 2em",
           fontSize: "1.1em",
-          background: "#fff",
-          border: "1px solid #d2b48c",
+          background: "#d2b48c",
+          color: "#fff",
+          border: "none",
           borderRadius: "6px",
           padding: "0.5em 1.2em",
           cursor: "pointer",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+          transition: "background 0.2s",
         }}
         onClick={handleGoBack}
+        onMouseOver={(e) => (e.currentTarget.style.background = "#bfa06a")}
+        onMouseOut={(e) => (e.currentTarget.style.background = "#d2b48c")}
       >
         ← Back to Books
       </button>
-      <div style={{ width: "100%", maxWidth: 800, flex: 1 }}>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 800,
+          flex: 1,
+          boxSizing: "border-box",
+          padding: "0 1em",
+          margin: 0,
+          overflowX: "hidden",
+        }}
+      >
         <div className="book-pages-container">
           {bookPages.map((page, idx) => (
             <div className="book-page" key={idx}>
@@ -107,7 +123,17 @@ const BookReader: React.FC = () => {
                   {bookData.title}
                 </h1>
               )}
-              <pre className="book-modal-text">{page}</pre>
+              <pre
+                className="book-modal-text"
+                style={{
+                  whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+                  overflowX: "auto",
+                  margin: 0,
+                }}
+              >
+                {page}
+              </pre>
               <div className="book-page-number">Page {idx + 1}</div>
             </div>
           ))}
