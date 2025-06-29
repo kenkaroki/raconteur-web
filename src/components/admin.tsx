@@ -164,7 +164,13 @@ const Admin: React.FC = () => {
       body: formData,
     });
     const data = await res.json();
-    return data.url ? `http://localhost:5000${data.url}` : "";
+    // Always use the same domain as baseUrl for image URLs
+    if (data.url) {
+      // Remove trailing slash from baseUrl if present
+      const apiBase = baseUrl.replace(/\/$/, "");
+      return `${apiBase}${data.url}`;
+    }
+    return "";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
