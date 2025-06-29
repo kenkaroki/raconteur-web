@@ -18,8 +18,8 @@ const Books: React.FC = () => {
   const [bookPages, setBookPages] = React.useState<string[] | null>(null);
   const [openTitle, setOpenTitle] = React.useState<string | null>(null);
 
-  // Split text into pages (e.g., 500 characters per page)
-  const PAGE_SIZE = 1000;
+  // Split text into pages (e.g., 1000 characters per page for full screen)
+  const PAGE_SIZE = 2000; // Increased for full screen pages
   const handleCardClick = async (bookId: number, title: string) => {
     const book = booksList.find((b) => b.id === bookId);
     if (!book) return;
@@ -133,10 +133,23 @@ const Books: React.FC = () => {
             <button className="book-modal-close" onClick={handleClose}>
               Close
             </button>
-            <h2>{openTitle}</h2>
             <div className="book-pages-container">
               {bookPages.map((page, idx) => (
                 <div className="book-page" key={idx}>
+                  {idx === 0 && (
+                    <h1
+                      style={{
+                        textAlign: "center",
+                        marginBottom: "2em",
+                        color: "#181820",
+                        fontSize: "2.5em",
+                        borderBottom: "3px solid tan",
+                        paddingBottom: "0.5em",
+                      }}
+                    >
+                      {openTitle}
+                    </h1>
+                  )}
                   <pre className="book-modal-text">{page}</pre>
                   <div className="book-page-number">Page {idx + 1}</div>
                 </div>
