@@ -58,7 +58,11 @@ const BookReader: React.FC = () => {
   }
 
   return (
-    <div className="book-modal-overlay">
+      <div className="book-modal-overlay" style={{
+          display: "flex",
+          width: "100%",
+          height: "100%"
+      }}>
       <div className="book-modal-content book-scrollable">
         <button className="book-modal-close" onClick={handleGoBack}>
           ← Back to Books
