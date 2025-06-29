@@ -25,6 +25,11 @@ const Admin: React.FC = () => {
   const [confirmDeleteId, setConfirmDeleteId] = React.useState<string | null>(
     null
   );
+  const [editBookId, setEditBookId] = React.useState<string | null>(null);
+  const [editFile, setEditFile] = React.useState<File | null>(null);
+  const [editLoading, setEditLoading] = React.useState(false);
+  const [editMessage, setEditMessage] = React.useState("");
+
   React.useEffect(() => {
     // Try to fetch from backend, fallback to localStorage
     fetch(`${baseUrl}/api/books`)
@@ -38,6 +43,52 @@ const Admin: React.FC = () => {
         setBooks(stored ? JSON.parse(stored) : []);
       });
   }, [showForm, message]);
+
+  // Handle file change for editing
+  const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setEditFile(e.target.files[0]);
+    }
+  };
+
+  // Handle update book text file
+  const handleUpdateBookText = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editBookId || !editFile) {
+      setEditMessage("Please select a book and a new text file.");
+      return;
+    }
+    setEditLoading(true);
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const text = reader.result as string;
+      try {
+        const res = await fetch(`${baseUrl}/api/books/${editBookId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        if (res.ok) {
+          setEditMessage("Book text updated!");
+          setEditBookId(null);
+          setEditFile(null);
+          // Refresh books list
+          fetch(`${baseUrl}/api/books`)
+            .then((res) => res.json())
+            .then((data) => {
+              if (Array.isArray(data)) setBooks(data);
+            });
+          window.dispatchEvent(new Event("books-updated"));
+        } else {
+          setEditMessage("Failed to update book text.");
+        }
+      } catch {
+        setEditMessage("Failed to update book text.");
+      }
+      setEditLoading(false);
+    };
+    reader.readAsText(editFile);
+  };
 
   // Always send the id as a string to the server, regardless of length
   const handleDelete = (id: number | string) => {
@@ -239,6 +290,99 @@ const Admin: React.FC = () => {
             )}
           </div>
           <h1 className="admin-title">Admin - Add New Book</h1>
+
+          {/* Update Book Text Section */}
+          <div className="admin-update-section">
+            <h2 className="admin-title" style={{ fontSize: "1.1rem" }}>
+              Update Book Text File
+            </h2>
+            <form
+              className="admin-form"
+              onSubmit={(e) => handleUpdateBookText(e)}
+            >
+              <div className="admin-field">
+                <label>Select Book:</label>
+                <select
+                  value={editBookId || ""}
+                  onChange={(e) => setEditBookId(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>
+                    Select a book
+                  </option>
+                  {books.map((book) => (
+                    <option key={book.id} value={book.id}>
+                      {book.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="admin-field">
+                <label>New Text File (.txt):</label>
+                <input
+                  type="file"
+                  accept=".txt"
+                  onChange={(e) => handleEditFileChange(e)}
+                  required
+                />
+              </div>
+              <button
+                className="admin-btn"
+                type="submit"
+                disabled={editLoading}
+              >
+                {editLoading ? "Updating..." : "Update Book Text"}
+              </button>
+              {editMessage && (
+                <div className="admin-message">{editMessage}</div>
+              )}
+            </form>
+          </div>
+
+          {/* Update Book Text Section */}
+          <div className="admin-update-section">
+            <h2 className="admin-title" style={{ fontSize: "1.1rem" }}>
+              Update Book Text File
+            </h2>
+            <form className="admin-form" onSubmit={handleUpdateBookText}>
+              <div className="admin-field">
+                <label>Select Book:</label>
+                <select
+                  value={editBookId || ""}
+                  onChange={(e) => setEditBookId(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>
+                    Select a book
+                  </option>
+                  {books.map((book) => (
+                    <option key={book.id} value={book.id}>
+                      {book.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="admin-field">
+                <label>New Text File (.txt):</label>
+                <input
+                  type="file"
+                  accept=".txt"
+                  onChange={handleEditFileChange}
+                  required
+                />
+              </div>
+              <button
+                className="admin-btn"
+                type="submit"
+                disabled={editLoading}
+              >
+                {editLoading ? "Updating..." : "Update Book Text"}
+              </button>
+              {editMessage && (
+                <div className="admin-message">{editMessage}</div>
+              )}
+            </form>
+          </div>
           <form className="admin-form" onSubmit={handleSubmit}>
             <div className="admin-field">
               <label>Book Title:</label>
