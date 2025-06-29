@@ -3,7 +3,7 @@ import Home from "./components/home";
 import Books from "./components/books";
 import Admin from "./components/admin";
 import About from "./components/about";
-import BookReader from "./components/bookreader";
+import BookReader from "./components/BookReader";
 
 function App() {
   return (
