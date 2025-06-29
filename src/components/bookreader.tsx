@@ -58,15 +58,34 @@ const BookReader: React.FC = () => {
   }
 
   return (
-      <div className="book-modal-overlay" style={{
-          display: "flex",
-          width: "100%",
-          height: "100%"
-      }}>
-      <div className="book-modal-content book-scrollable">
-        <button className="book-modal-close" onClick={handleGoBack}>
-          ← Back to Books
-        </button>
+    <div
+      style={{
+        minHeight: "100vh",
+        width: "100vw",
+        background: "#f8f5f0",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: 0,
+        margin: 0,
+      }}
+    >
+      <button
+        style={{
+          alignSelf: "flex-start",
+          margin: "2em 0 1em 2em",
+          fontSize: "1.1em",
+          background: "#fff",
+          border: "1px solid #d2b48c",
+          borderRadius: "6px",
+          padding: "0.5em 1.2em",
+          cursor: "pointer",
+        }}
+        onClick={handleGoBack}
+      >
+        ← Back to Books
+      </button>
+      <div style={{ width: "100%", maxWidth: 800, flex: 1 }}>
         <div className="book-pages-container">
           {bookPages.map((page, idx) => (
             <div className="book-page" key={idx}>
