@@ -30,7 +30,7 @@ const Home = () => {
             </p>
             </div>
             <button>
-                <a href="/books">Start Reading</a>
+                <a href="raconteur-web/#/books">Start Reading</a>
             </button>
 
             
