@@ -61,6 +61,7 @@ const BookReader: React.FC = () => {
     <div
       style={{
         minHeight: "100vh",
+        height: "100vh",
         width: "100vw",
         background: "#f8f5f0",
         display: "flex",
@@ -68,7 +69,7 @@ const BookReader: React.FC = () => {
         alignItems: "center",
         padding: 0,
         margin: 0,
-        overflowX: "hidden",
+        overflow: "hidden",
       }}
     >
       <button
@@ -99,12 +100,14 @@ const BookReader: React.FC = () => {
           boxSizing: "border-box",
           padding: "0 1em",
           margin: 0,
+          overflowY: "auto",
           overflowX: "hidden",
+          height: "calc(100vh - 5em)", // account for button and padding
         }}
       >
-        <div className="book-pages-container">
+        <div className="book-pages-container" style={{ width: "100%" }}>
           {bookPages.map((page, idx) => (
-            <div className="book-page" key={idx}>
+            <div className="book-page" key={idx} style={{ width: "100%" }}>
               {idx === 0 && (
                 <h1
                   style={{
@@ -130,6 +133,10 @@ const BookReader: React.FC = () => {
                   wordBreak: "break-word",
                   overflowX: "auto",
                   margin: 0,
+                  width: "100%",
+                  fontSize: "1.08em",
+                  background: "none",
+                  boxSizing: "border-box",
                 }}
               >
                 {page}
