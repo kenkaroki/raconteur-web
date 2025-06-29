@@ -135,7 +135,7 @@
   white-space: pre-wrap;
   word-break: break-word;
   margin-top: 2em;
-  color: #111;
+  color: gray;
 }
 .books-container {
   display: flex;
