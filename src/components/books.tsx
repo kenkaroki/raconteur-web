@@ -140,11 +140,15 @@ const Books: React.FC = () => {
                     <h1
                       style={{
                         textAlign: "center",
-                        marginBottom: "2em",
-                        color: "#181820",
-                        fontSize: "2.5em",
-                        borderBottom: "3px solid tan",
-                        paddingBottom: "0.5em",
+                        marginBottom: "3em",
+                        marginTop: "2em",
+                        color: "#2c2c2c",
+                        fontSize: "2.2em",
+                        fontFamily: "Georgia, serif",
+                        fontWeight: "normal",
+                        borderBottom: "2px solid #d2b48c",
+                        paddingBottom: "1em",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       {openTitle}
