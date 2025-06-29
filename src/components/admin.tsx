@@ -231,12 +231,23 @@ const Admin: React.FC = () => {
         </form>
       ) : (
         <>
+          <hr
+            style={{
+              margin: "32px 0 24px 0",
+              border: "none",
+              borderTop: "2px solid #eee",
+            }}
+          />
           <h2
             className="admin-title"
             style={{ fontSize: "1.3rem", marginTop: 0 }}
           >
-            Books List
+            Delete a Book
           </h2>
+          <p style={{ color: "#666", marginBottom: 8 }}>
+            Click <b>Delete</b> to remove a book from the library. This action
+            cannot be undone.
+          </p>
           <div className="admin-books-list">
             {books.length === 0 && (
               <div
@@ -289,100 +300,68 @@ const Admin: React.FC = () => {
               </div>
             )}
           </div>
-          <h1 className="admin-title">Admin - Add New Book</h1>
 
-          {/* Update Book Text Section */}
-          <div className="admin-update-section">
-            <h2 className="admin-title" style={{ fontSize: "1.1rem" }}>
-              Update Book Text File
-            </h2>
-            <form
-              className="admin-form"
-              onSubmit={(e) => handleUpdateBookText(e)}
-            >
-              <div className="admin-field">
-                <label>Select Book:</label>
-                <select
-                  value={editBookId || ""}
-                  onChange={(e) => setEditBookId(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>
-                    Select a book
-                  </option>
-                  {books.map((book) => (
-                    <option key={book.id} value={book.id}>
-                      {book.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="admin-field">
-                <label>New Text File (.txt):</label>
-                <input
-                  type="file"
-                  accept=".txt"
-                  onChange={(e) => handleEditFileChange(e)}
-                  required
-                />
-              </div>
-              <button
-                className="admin-btn"
-                type="submit"
-                disabled={editLoading}
+          <hr
+            style={{
+              margin: "32px 0 24px 0",
+              border: "none",
+              borderTop: "2px solid #eee",
+            }}
+          />
+          <h2 className="admin-title" style={{ fontSize: "1.3rem" }}>
+            Update Book Text
+          </h2>
+          <p style={{ color: "#666", marginBottom: 8 }}>
+            Select a book and upload a new <b>.txt</b> file to replace its
+            content.
+          </p>
+          <form className="admin-form" onSubmit={handleUpdateBookText}>
+            <div className="admin-field">
+              <label>Select Book:</label>
+              <select
+                value={editBookId || ""}
+                onChange={(e) => setEditBookId(e.target.value)}
+                required
               >
-                {editLoading ? "Updating..." : "Update Book Text"}
-              </button>
-              {editMessage && (
-                <div className="admin-message">{editMessage}</div>
-              )}
-            </form>
-          </div>
+                <option value="" disabled>
+                  Select a book
+                </option>
+                {books.map((book) => (
+                  <option key={book.id} value={book.id}>
+                    {book.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="admin-field">
+              <label>New Text File (.txt):</label>
+              <input
+                type="file"
+                accept=".txt"
+                onChange={handleEditFileChange}
+                required
+              />
+            </div>
+            <button className="admin-btn" type="submit" disabled={editLoading}>
+              {editLoading ? "Updating..." : "Update Book Text"}
+            </button>
+            {editMessage && <div className="admin-message">{editMessage}</div>}
+          </form>
 
-          {/* Update Book Text Section */}
-          <div className="admin-update-section">
-            <h2 className="admin-title" style={{ fontSize: "1.1rem" }}>
-              Update Book Text File
-            </h2>
-            <form className="admin-form" onSubmit={handleUpdateBookText}>
-              <div className="admin-field">
-                <label>Select Book:</label>
-                <select
-                  value={editBookId || ""}
-                  onChange={(e) => setEditBookId(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>
-                    Select a book
-                  </option>
-                  {books.map((book) => (
-                    <option key={book.id} value={book.id}>
-                      {book.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="admin-field">
-                <label>New Text File (.txt):</label>
-                <input
-                  type="file"
-                  accept=".txt"
-                  onChange={handleEditFileChange}
-                  required
-                />
-              </div>
-              <button
-                className="admin-btn"
-                type="submit"
-                disabled={editLoading}
-              >
-                {editLoading ? "Updating..." : "Update Book Text"}
-              </button>
-              {editMessage && (
-                <div className="admin-message">{editMessage}</div>
-              )}
-            </form>
-          </div>
+          <hr
+            style={{
+              margin: "32px 0 24px 0",
+              border: "none",
+              borderTop: "2px solid #eee",
+            }}
+          />
+          <h2 className="admin-title" style={{ fontSize: "1.3rem" }}>
+            Add a New Book
+          </h2>
+          <p style={{ color: "#666", marginBottom: 8 }}>
+            Fill out the form below to add a new book to the library. All fields
+            are required.
+          </p>
           <form className="admin-form" onSubmit={handleSubmit}>
             <div className="admin-field">
               <label>Book Title:</label>
