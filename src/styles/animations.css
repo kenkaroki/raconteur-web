@@ -1,0 +1,123 @@
+.animations-container {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.animations-title {
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 768px) {
+  .animations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.animations-dark {
+  color: black;
+}
+
+.animations-light {
+  color: white;
+}
+
+.animation-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--surface-color);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.animation-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.animation-thumbnail {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  overflow: hidden;
+}
+
+.animation-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.animation-card:hover .animation-thumbnail img {
+  transform: scale(1.1);
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.animation-card:hover .play-icon {
+  opacity: 1;
+}
+
+.animation-video-title {
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  font-family: var(--primary-font);
+}
+
+/* Animation Modal */
+.animation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.animation-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+}
+
+.animation-modal-content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.animation-modal-close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+}
