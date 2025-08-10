@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .admin-container {
   display: flex;
   justify-content: center;
@@ -22,120 +21,17 @@
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
-=======
-.admin-delete-confirm-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-.admin-delete-confirm-modal {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.13);
-  padding: 32px 28px 24px 28px;
-  min-width: 280px;
-  text-align: center;
-}
-.admin-books-list {
-  margin-bottom: 28px;
-}
-.admin-book-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: #f7f7f7;
-  border-radius: 7px;
-  padding: 8px 12px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-}
-.admin-book-thumb {
-  width: 44px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 5px;
-  background: #eee;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
-}
-.admin-book-info {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.admin-book-title {
-  font-size: 1.08rem;
-  font-weight: 500;
-  color: #222;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px;
-}
-.admin-delete-btn {
-  background: #e11d48;
-  color: #fff;
-  font-size: 0.98rem;
-  padding: 7px 16px;
-  border-radius: 5px;
-  margin: 0;
-  box-shadow: none;
-  transition: background 0.18s;
-}
-.admin-delete-btn:disabled {
-  background: #fca5a5;
-  cursor: not-allowed;
-}
-.admin-delete-btn:not(:disabled):hover {
-  background: #be123c;
-}
-.admin-cover-preview {
-  margin-top: 10px;
-  max-width: 120px;
-  max-height: 160px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-.admin-container {
-  max-width: 420px;
-  margin: 40px auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  padding: 32px 28px 24px 28px;
-}
-
-.admin-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 18px;
-  text-align: center;
-  color: #2d2d2d;
->>>>>>> origin/main
 }
 
 .admin-form {
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
   gap: 1.5rem;
-=======
-  gap: 18px;
->>>>>>> origin/main
 }
 
 .admin-field {
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
 }
 
 .admin-field label {
@@ -235,51 +131,3 @@
   padding-top: 2rem;
   border-top: 1px solid var(--border-color);
 }
-=======
-  gap: 6px;
-}
-
-.admin-field label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #444;
-}
-
-.admin-field input[type="text"],
-.admin-field input[type="password"],
-.admin-field input[type="file"] {
-  padding: 7px 10px;
-  border: 1px solid #d0d0d0;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: #fafbfc;
-  color: #222;
-}
-
-.admin-btn {
-  background: tan;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.18s;
-}
-.admin-btn:disabled {
-  background: #bcd6fa;
-  cursor: not-allowed;
-}
-.admin-btn:not(:disabled):hover {
-  background: #2563eb;
-}
-
-.admin-message {
-  margin-top: 16px;
-  font-size: 1rem;
-  text-align: center;
-  color: #2563eb;
-}
->>>>>>> origin/main
