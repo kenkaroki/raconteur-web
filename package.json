@@ -3,7 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+<<<<<<< HEAD
   "homepage": "https://kenkaroki.github.io/raconteur-web/",
+=======
+  "homepage" : "https://kenkaroki.github.io/raconteur-web/",
+>>>>>>> origin/main
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
@@ -14,7 +18,10 @@
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
+<<<<<<< HEAD
     "jwt-decode": "^4.0.0",
+=======
+>>>>>>> origin/main
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3"
