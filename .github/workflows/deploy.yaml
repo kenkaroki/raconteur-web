@@ -30,8 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Build
-        run: npm run build
+            - name: Clean dist and Build
+        run: |
+          rm -rf dist
+          npm run build
+        working-directory: raconteur-web
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
