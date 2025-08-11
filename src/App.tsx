@@ -15,10 +15,8 @@ import { ThemeProvider } from "./components/ThemeContext";
 import { jwtDecode } from "jwt-decode";
 
 function AppContent({
-  loggedInUser,
   setLoggedInUser,
 }: {
-  loggedInUser: string | null;
   setLoggedInUser: (user: string | null) => void;
 }) {
   const navigate = useNavigate();
@@ -73,10 +71,7 @@ function App() {
     <ThemeProvider>
       <Router>
         <Layout loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}>
-          <AppContent
-            loggedInUser={loggedInUser}
-            setLoggedInUser={setLoggedInUser}
-          />
+          <AppContent setLoggedInUser={setLoggedInUser} />
         </Layout>
       </Router>
     </ThemeProvider>
