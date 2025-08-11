@@ -14,12 +14,17 @@ import Login from "./components/login";
 import { ThemeProvider } from "./components/ThemeContext";
 import { jwtDecode } from "jwt-decode";
 
-function App() {
-  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+function AppContent({
+  loggedInUser,
+  setLoggedInUser,
+}: {
+  loggedInUser: string | null;
+  setLoggedInUser: (user: string | null) => void;
+}) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ✅ Step 1: Handle token from server redirect
+    // Step 1: Handle token from server redirect
     const params = new URLSearchParams(window.location.search);
     const tokenFromUrl = params.get("token");
 
@@ -33,34 +38,45 @@ function App() {
       );
     }
 
-    // ✅ Step 2: Load token from localStorage
+    // Step 2: Load token from localStorage
     const token = tokenFromUrl || localStorage.getItem("token");
     if (token) {
       try {
         const decoded: { sub: string } = jwtDecode(token);
         setLoggedInUser(decoded.sub);
-        navigate("/"); // Go to home after login
+        navigate("/"); // Redirect to home after login
       } catch (error) {
         console.error("Invalid token:", error);
         localStorage.removeItem("token");
       }
     }
-  }, [navigate]);
+  }, [navigate, setLoggedInUser]);
+
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/books" element={<Books />} />
+      <Route path="/animations" element={<Animations />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route
+        path="/login"
+        element={<Login setLoggedInUser={setLoggedInUser} />}
+      />
+    </Routes>
+  );
+}
+
+function App() {
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
 
   return (
     <ThemeProvider>
       <Router>
         <Layout loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/books" element={<Books />} />
-            <Route path="/animations" element={<Animations />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route
-              path="/login"
-              element={<Login setLoggedInUser={setLoggedInUser} />}
-            />
-          </Routes>
+          <AppContent
+            loggedInUser={loggedInUser}
+            setLoggedInUser={setLoggedInUser}
+          />
         </Layout>
       </Router>
     </ThemeProvider>
