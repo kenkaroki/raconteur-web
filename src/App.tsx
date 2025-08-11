@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./components/home";
 import Books from "./components/books";
@@ -30,12 +30,12 @@ function App() {
       <Router>
         <Layout loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}>
           <Routes>
-            <Route path="raconteur-web/" element={<Home />} />
-            <Route path="raconteur-web/books" element={<Books />} />
-            <Route path="raconteur-web/animations" element={<Animations />} />
-            <Route path="raconteur-web/admin" element={<Admin />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/animations" element={<Animations />} />
+            <Route path="/admin" element={<Admin />} />
             <Route
-              path="raconteur-web/login"
+              path="/login"
               element={<Login setLoggedInUser={setLoggedInUser} />}
             />
           </Routes>
