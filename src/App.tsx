@@ -7,7 +7,7 @@ import Animations from "./components/animations";
 import Layout from "./components/layout";
 import Login from "./components/login";
 import { ThemeProvider } from "./components/ThemeContext";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
@@ -15,8 +15,13 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      const decoded: { sub: string } = jwtDecode(token);
-      setLoggedInUser(decoded.sub);
+      try {
+        const decoded: { sub: string } = jwtDecode(token);
+        setLoggedInUser(decoded.sub);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        localStorage.removeItem("token");
+      }
     }
   }, []);
 
@@ -29,7 +34,10 @@ function App() {
             <Route path="/books" element={<Books />} />
             <Route path="/animations" element={<Animations />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} />} />
+            <Route
+              path="/login"
+              element={<Login setLoggedInUser={setLoggedInUser} />}
+            />
           </Routes>
         </Layout>
       </Router>
