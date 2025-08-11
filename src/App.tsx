@@ -30,12 +30,12 @@ function App() {
       <Router>
         <Layout loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/books" element={<Books />} />
-            <Route path="/animations" element={<Animations />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="raconteur-web/" element={<Home />} />
+            <Route path="raconteur-web/books" element={<Books />} />
+            <Route path="raconteur-web/animations" element={<Animations />} />
+            <Route path="raconteur-web/admin" element={<Admin />} />
             <Route
-              path="/login"
+              path="raconteur-web/login"
               element={<Login setLoggedInUser={setLoggedInUser} />}
             />
           </Routes>
