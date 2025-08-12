@@ -51,9 +51,9 @@ const Layout = ({ children, loggedInUser, setLoggedInUser }: LayoutProps) => {
             )}
             {loggedInUser ? (
               <li className="nav-item">
-                <button onClick={handleLogout} className="nav-links-button">
-                  Logout
-                </button>
+                <NavLink to="/profile" className="nav-links">
+                  Profile
+                </NavLink>
               </li>
             ) : (
               <li className="nav-item">

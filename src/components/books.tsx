@@ -2,40 +2,86 @@ import * as React from "react";
 import { useContext } from 'react';
 import { ThemeContext } from './ThemeContext';
 import "../styles/books.css";
+import { useParams, useLocation } from "react-router-dom";
 
 interface Book {
   id: string;
   title: string;
+  author: string;
   backgroundImage: string;
   text?: string;
 }
 
-const Books: React.FC = () => {
+interface BooksProps {
+  loggedInUser: string | null;
+}
+
+const Books: React.FC<BooksProps> = ({ loggedInUser }) => {
   const { theme } = useContext(ThemeContext);
   const [booksList, setBooksList] = React.useState<Book[]>([]);
 
   const [bookPages, setBookPages] = React.useState<string[] | null>(null);
-  const [, setOpenTitle] = React.useState<string | null>(null);
+  const [openTitle, setOpenTitle] = React.useState<string | null>(null);
   const [currentPage, setCurrentPage] = React.useState(0);
+  const [currentBookId, setCurrentBookId] = React.useState<string | null>(null);
+
+  const { id } = useParams();
+  const location = useLocation();
 
   const PAGE_SIZE = 1200;
 
-  const processText = (text: string, title: string) => {
+  const processText = (text: string, title: string, startingPage = 0) => {
     const pages = [];
     for (let i = 0; i < text.length; i += PAGE_SIZE) {
       pages.push(text.slice(i, i + PAGE_SIZE));
     }
     setBookPages(pages);
     setOpenTitle(title);
-    setCurrentPage(0);
+    setCurrentPage(startingPage);
   };
 
-  const handleCardClick = async (bookId: string, title: string) => {
+  const handleCardClick = async (bookId: string, title: string, startingPage = 0) => {
     const book = booksList.find((b) => b.id === bookId);
     if (!book || !book.text) return;
 
-    processText(book.text, title);
+    if (loggedInUser) {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`https://raconteur-server.onrender.com/api/user/${loggedInUser}/read-books`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (response.ok) {
+        const readBooks = await response.json();
+        const isBookRead = readBooks.read_books.some((b: any) => b.book_id === bookId);
+        if (!isBookRead) {
+          await fetch(`https://raconteur-server.onrender.com/api/user/${loggedInUser}/read-books`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify({ book_id: bookId }),
+            }
+          );
+        }
+      }
+    }
+
+    setCurrentBookId(bookId);
+    processText(book.text, title, startingPage);
   };
+
+  React.useEffect(() => {
+    if (id && booksList.length > 0) {
+      const book = booksList.find((b) => b.id === id);
+      if (book) {
+        const startingPage = location.state?.currentPage || 0;
+        handleCardClick(book.id, book.title, startingPage);
+      }
+    }
+  }, [id, booksList, location.state]);
 
   React.useEffect(() => {
     const onStorage = () => {
@@ -57,9 +103,26 @@ const Books: React.FC = () => {
       .catch(err => console.error("Failed to fetch books:", err));
   }, []);
 
+  React.useEffect(() => {
+    if (loggedInUser && currentBookId && currentPage > 0) {
+      const token = localStorage.getItem('token');
+      fetch(`https://raconteur-server.onrender.com/api/user/${loggedInUser}/read-books/${currentBookId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ currentPage }),
+        }
+      );
+    }
+  }, [currentPage, loggedInUser, currentBookId]);
+
   const handleClose = () => {
     setBookPages(null);
     setOpenTitle(null);
+    setCurrentBookId(null);
   };
 
   const nextPage = () => {

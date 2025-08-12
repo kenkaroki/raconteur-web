@@ -11,12 +11,15 @@ import Admin from "./components/admin";
 import Animations from "./components/animations";
 import Layout from "./components/layout";
 import Login from "./components/login";
+import Profile from "./components/profile";
 import { ThemeProvider } from "./components/ThemeContext";
 import { jwtDecode } from "jwt-decode";
 
 function AppContent({
+  loggedInUser,
   setLoggedInUser,
 }: {
+  loggedInUser: string | null;
   setLoggedInUser: (user: string | null) => void;
 }) {
   const navigate = useNavigate();
@@ -42,7 +45,6 @@ function AppContent({
       try {
         const decoded: { sub: string } = jwtDecode(token);
         setLoggedInUser(decoded.sub);
-        navigate("/"); // Redirect to home after login
       } catch (error) {
         console.error("Invalid token:", error);
         localStorage.removeItem("token");
@@ -53,13 +55,15 @@ function AppContent({
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/books" element={<Books />} />
+      <Route path="/books" element={<Books loggedInUser={loggedInUser} />} />
+      <Route path="/books/:id" element={<Books loggedInUser={loggedInUser} />} />
       <Route path="/animations" element={<Animations />} />
       <Route path="/admin" element={<Admin />} />
       <Route
         path="/login"
         element={<Login setLoggedInUser={setLoggedInUser} />}
       />
+      {loggedInUser && <Route path="/profile" element={<Profile loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />} />}
     </Routes>
   );
 }
@@ -71,7 +75,10 @@ function App() {
     <ThemeProvider>
       <Router>
         <Layout loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}>
-          <AppContent setLoggedInUser={setLoggedInUser} />
+          <AppContent
+            loggedInUser={loggedInUser}
+            setLoggedInUser={setLoggedInUser}
+          />
         </Layout>
       </Router>
     </ThemeProvider>
