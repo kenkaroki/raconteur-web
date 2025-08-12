@@ -10,14 +10,10 @@ interface LayoutProps {
   setLoggedInUser: (user: string | null) => void;
 }
 
-const Layout = ({ children, loggedInUser, setLoggedInUser }: LayoutProps) => {
+const Layout = ({ children, loggedInUser }: LayoutProps) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setLoggedInUser(null);
-  };
-
+ 
   return (
     <div className="layout">
       <div className="background-image" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
@@ -51,9 +47,9 @@ const Layout = ({ children, loggedInUser, setLoggedInUser }: LayoutProps) => {
             )}
             {loggedInUser ? (
               <li className="nav-item">
-                <button onClick={handleLogout} className="nav-links-button">
-                  Logout
-                </button>
+                <NavLink to="/profile" className="nav-links">
+                  Profile
+                </NavLink>
               </li>
             ) : (
               <li className="nav-item">

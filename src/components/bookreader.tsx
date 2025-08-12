@@ -111,7 +111,6 @@ const BookReader: React.FC = () => {
               {idx === 0 && (
                 <h1
                   style={{
-                    textAlign: "center",
                     marginBottom: "3em",
                     marginTop: "2em",
                     color: "#2c2c2c",
