@@ -10,14 +10,10 @@ interface LayoutProps {
   setLoggedInUser: (user: string | null) => void;
 }
 
-const Layout = ({ children, loggedInUser, setLoggedInUser }: LayoutProps) => {
+const Layout = ({ children, loggedInUser }: LayoutProps) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setLoggedInUser(null);
-  };
-
+ 
   return (
     <div className="layout">
       <div className="background-image" style={{ backgroundImage: `url(${backgroundImage})` }}></div>

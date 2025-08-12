@@ -21,7 +21,7 @@ const Books: React.FC<BooksProps> = ({ loggedInUser }) => {
   const [booksList, setBooksList] = React.useState<Book[]>([]);
 
   const [bookPages, setBookPages] = React.useState<string[] | null>(null);
-  const [openTitle, setOpenTitle] = React.useState<string | null>(null);
+  const [, setOpenTitle] = React.useState<string | null>(null);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [currentBookId, setCurrentBookId] = React.useState<string | null>(null);
 
