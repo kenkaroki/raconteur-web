@@ -112,27 +112,25 @@ const Admin: React.FC = () => {
         formData.append("textFile", file);
       }
 
-      const response = await fetch("https://raconteur-server.onrender.com/api/books", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        "https://raconteur-server.onrender.com/api/books-upload",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`, // ✅ only auth, no Content-Type
+          },
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         setMessage("Book uploaded successfully!");
         setTitle("");
         setCoverUrl("");
         setFile(null);
-        // Reset file input
-        const fileInput = document.getElementById("textFile") as HTMLInputElement;
-        if (fileInput) fileInput.value = "";
-        
-        fetchBooksAndAnimations();
       } else {
         const errorData = await response.json();
-        setMessage(`Upload failed: ${errorData.message || "Unknown error"}`);
+        setMessage(`Upload failed: ${errorData.error || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Upload error:", error);
@@ -141,6 +139,7 @@ const Admin: React.FC = () => {
       setLoading(false);
     }
   };
+
 
   const handleAnimationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -247,20 +246,51 @@ const Admin: React.FC = () => {
         return;
       }
 
-      const formData = new FormData();
-      if (updateCoverUrl) {
-        formData.append("backgroundImage", updateCoverUrl);
-      }
+      let textContent: string | undefined;
       if (updateTextFile) {
-        formData.append("textFile", updateTextFile);
+        textContent = await updateTextFile.text();
       }
 
+      const body: { backgroundImage?: string; text?: string } = {};
+      if (updateCoverUrl) {
+        body.backgroundImage = updateCoverUrl;
+      }
+      if (textContent) {
+        body.text = textContent;
+      }
+
+      console.log("Request Body:", body);
+      console.log("Request Headers:", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      });
+      console.log("Request Body:", body);
+      console.log("Request Headers:", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      });
+      console.log("Request Body:", body);
+      console.log("Request Headers:", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      });
+      console.log("Request Body:", body);
+      console.log("Request Headers:", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      });
+      console.log("Request Body:", body);
+      console.log("Request Headers:", {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      });
       const response = await fetch(`https://raconteur-server.onrender.com/api/books/${updateBookId}`, {
         method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: formData,
+        body: JSON.stringify(body),
       });
 
       if (response.ok) {
