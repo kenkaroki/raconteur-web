@@ -9,7 +9,7 @@ interface Book {
   title: string;
   author: string;
   backgroundImage: string;
-  text?: string;
+  text?: string; // Make text optional
 }
 
 interface BooksProps {
@@ -19,6 +19,8 @@ interface BooksProps {
 const Books: React.FC<BooksProps> = ({ loggedInUser }) => {
   const { theme } = useContext(ThemeContext);
   const [booksList, setBooksList] = React.useState<Book[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [openingBook, setOpeningBook] = React.useState<string | null>(null);
 
   const [bookPages, setBookPages] = React.useState<string[] | null>(null);
   const [, setOpenTitle] = React.useState<string | null>(null);
@@ -41,36 +43,46 @@ const Books: React.FC<BooksProps> = ({ loggedInUser }) => {
   };
 
   const handleCardClick = async (bookId: string, title: string, startingPage = 0) => {
-    const book = booksList.find((b) => b.id === bookId);
-    if (!book || !book.text) return;
+    setOpeningBook(bookId);
+    try {
+      const response = await fetch(`https://raconteur-server.onrender.com/api/books/${bookId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch book text');
+      }
+      const book = await response.json();
 
-    if (loggedInUser) {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`https://raconteur-server.onrender.com/api/user/${loggedInUser}/read-books`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      if (response.ok) {
-        const readBooks = await response.json();
-        const isBookRead = readBooks.read_books.some((b: any) => b.book_id === bookId);
-        if (!isBookRead) {
-          await fetch(`https://raconteur-server.onrender.com/api/user/${loggedInUser}/read-books`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${token}`
-              },
-              body: JSON.stringify({ book_id: bookId }),
-            }
-          );
+      if (loggedInUser) {
+        const token = localStorage.getItem('token');
+        const userResponse = await fetch(`https://raconteur-server.onrender.com/api/user/${loggedInUser}/read-books`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (userResponse.ok) {
+          const readBooks = await userResponse.json();
+          const isBookRead = readBooks.read_books.some((b: any) => b.book_id === bookId);
+          if (!isBookRead) {
+            await fetch(`https://raconteur-server.onrender.com/api/user/${loggedInUser}/read-books`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ book_id: bookId }),
+              }
+            );
+          }
         }
       }
-    }
 
-    setCurrentBookId(bookId);
-    processText(book.text, title, startingPage);
+      setCurrentBookId(bookId);
+      processText(book.text, title, startingPage);
+    } catch (error) {
+      console.error("Error fetching book text:", error);
+    } finally {
+      setOpeningBook(null);
+    }
   };
 
   React.useEffect(() => {
@@ -99,8 +111,12 @@ const Books: React.FC<BooksProps> = ({ loggedInUser }) => {
         setBooksList(data);
         localStorage.setItem("booksList", JSON.stringify(data)); // Store fetched data in localStorage
         console.log("Books List from API:", data);
+        setLoading(false);
       })
-      .catch(err => console.error("Failed to fetch books:", err));
+      .catch(err => {
+        console.error("Failed to fetch books:", err);
+        setLoading(false);
+      });
   }, []);
 
   React.useEffect(() => {
@@ -141,24 +157,33 @@ const Books: React.FC<BooksProps> = ({ loggedInUser }) => {
     <>
       <div className={`books-container fade-in ${theme === 'dark' ? 'books-dark' : 'books-light'}`}>
         <h1 className={`books-title fade-in ${theme === 'dark' ? 'books-title-dark' : 'books-title-light'}`}>Our Collection</h1>
-        <div className="bookshelf">
-          {booksList.map((book, index) => (
-            <div
-              key={book.id}
-              className="book"
-              style={{ zIndex: booksList.length - index }}
-              onClick={() => handleCardClick(book.id, book.title)}
-            >
-              <div className="book-cover">
-                <img src={book.backgroundImage} alt={book.title} />
-                <div className="book-spine"></div>
+        {loading ? (
+          <div className="loading-message">Loading books...</div>
+        ) : (
+          <div className="bookshelf">
+            {booksList.map((book, index) => (
+              <div
+                key={book.id}
+                className="book"
+                style={{ zIndex: booksList.length - index }}
+                onClick={() => handleCardClick(book.id, book.title)}
+              >
+                {openingBook === book.id && (
+                  <div className="book-opening-overlay">
+                    <div className="loading-spinner"></div>
+                  </div>
+                )}
+                <div className="book-cover">
+                  <img src={book.backgroundImage} alt={book.title} />
+                  <div className="book-spine"></div>
+                </div>
+                <div className="book-title-band">
+                  {book.title}
+                </div>
               </div>
-              <div className="book-title-band">
-                {book.title}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {bookPages && (
