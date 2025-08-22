@@ -31,7 +31,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUser }) => {
       localStorage.setItem("token", data.access_token);
       const decoded: { sub: string } = jwtDecode(data.access_token);
       setLoggedInUser(decoded.sub);
-      window.location.href = "/";
+      window.location.href = "https://kenkaroki.github.io/raconteur-web/#/";
     } else {
       setMessage(data.message);
     }

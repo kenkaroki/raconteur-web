@@ -45,6 +45,7 @@ function AppContent({
     if (token) {
       try {
         const decoded: { sub: string } = jwtDecode(token);
+        console.log("Decoded user from token:", decoded.sub);
         setLoggedInUser(decoded.sub);
       } catch (error) {
         console.error("Invalid token:", error);
