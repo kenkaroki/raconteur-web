@@ -49,8 +49,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUser }) => {
     );
     const data = await response.json();
     if (response.ok) {
-      setMessage(data.message);
-      setIsLogin(true);
+      window.location.href = "https://kenkaroki.github.io/raconteur-web/";
     } else {
       setMessage(data.message);
     }
