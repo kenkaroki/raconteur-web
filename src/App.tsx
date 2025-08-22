@@ -12,6 +12,7 @@ import Animations from "./components/animations";
 import Layout from "./components/layout";
 import Login from "./components/login";
 import Profile from "./components/profile";
+import AboutAuthor from "./components/aboutAuthor"; // Import the new component
 import { ThemeProvider } from "./components/ThemeContext";
 import { jwtDecode } from "jwt-decode";
 
@@ -59,6 +60,7 @@ function AppContent({
       <Route path="/books/:id" element={<Books loggedInUser={loggedInUser} />} />
       <Route path="/animations" element={<Animations />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/about-author" element={<AboutAuthor />} />
       <Route
         path="/login"
         element={<Login setLoggedInUser={setLoggedInUser} />}

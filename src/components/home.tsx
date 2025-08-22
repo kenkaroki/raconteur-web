@@ -17,6 +17,9 @@ const Home = () => {
           <NavLink to="/books" className="btn hero-btn">
             Explore the Library
           </NavLink>
+          <NavLink to="/about-author" className="btn hero-btn-secondary">
+            About the Author
+          </NavLink>
         </div>
       </div>
     </div>
