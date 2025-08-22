@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { ThemeContext } from "./ThemeContext";
 import "../styles/login.css";
 import { jwtDecode } from "jwt-decode";
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from "@react-oauth/google";
 
 interface LoginProps {
   setLoggedInUser: (user: string | null) => void;
@@ -18,17 +18,20 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUser }) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await fetch("https://raconteur-server.onrender.com/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+    const response = await fetch(
+      "https://raconteur-server.onrender.com/api/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      }
+    );
     const data = await response.json();
     if (response.ok) {
       localStorage.setItem("token", data.access_token);
       const decoded: { sub: string } = jwtDecode(data.access_token);
       setLoggedInUser(decoded.sub);
-      window.location.href = "/";
+      window.location.href = "https://kenkaroki.github.io/raconteur-web/#/";
     } else {
       setMessage(data.message);
     }
@@ -36,39 +39,48 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUser }) => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await fetch("https://raconteur-server.onrender.com/api/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+    const response = await fetch(
+      "https://raconteur-server.onrender.com/api/signup",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      }
+    );
     const data = await response.json();
     if (response.ok) {
-      setMessage(data.message);
-      setIsLogin(true);
+      window.location.href = "https://kenkaroki.github.io/raconteur-web/";
     } else {
       setMessage(data.message);
     }
   };
 
   const handleGoogleLogin = async (credentialResponse: any) => {
-    const response = await fetch("https://raconteur-server.onrender.com/api/google-login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ credential: credentialResponse.credential }),
-    });
+    const response = await fetch(
+      "https://raconteur-server.onrender.com/api/google-login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential: credentialResponse.credential }),
+      }
+    );
     const data = await response.json();
     if (response.ok) {
       localStorage.setItem("token", data.access_token);
       const decoded: { sub: string } = jwtDecode(data.access_token);
       setLoggedInUser(decoded.sub);
-      window.location.href = "/";
+      window.location.href = "https://kenkaroki.github.io/raconteur-web/#/";
     } else {
       setMessage(data.message);
     }
   };
 
   return (
-    <div className={`login-container ${theme === "dark" ? "login-dark" : "login-light"}`}>
+    <div
+      className={`login-container ${
+        theme === "dark" ? "login-dark" : "login-light"
+      }`}
+    >
       <div className="login-form">
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
         <form onSubmit={isLogin ? handleLogin : handleSignup}>
@@ -104,7 +116,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUser }) => {
           <GoogleLogin
             onSuccess={handleGoogleLogin}
             onError={() => {
-              console.log('Login Failed');
+              console.log("Google Login Failed");
             }}
           />
         </div>
