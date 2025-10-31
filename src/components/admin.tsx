@@ -52,13 +52,13 @@ const Admin: React.FC = () => {
         });
 
         if (!response.ok) {
-          navigate("/");
+          navigate("https://kenkaroki.github.io/raconteur-web/");
         } else {
           fetchBooksAndAnimations();
         }
       } catch (error) {
         console.error("Failed to verify admin access:", error);
-        navigate("/");
+        navigate("https://kenkaroki.github.io/raconteur-web/");
       }
     };
 
