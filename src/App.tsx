@@ -16,6 +16,7 @@ import AboutAuthor from "./components/aboutAuthor"; // Import the new component
 import { ThemeProvider } from "./components/ThemeContext";
 import { jwtDecode } from "jwt-decode";
 
+
 function AppContent({
   loggedInUser,
   setLoggedInUser,
