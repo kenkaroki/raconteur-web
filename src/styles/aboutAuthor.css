@@ -1,0 +1,55 @@
+.about-author-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.about-author-container.light {
+  background-color: #fff;
+  color: #333;
+}
+
+.about-author-container.dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.author-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.author-header h1 {
+  font-size: 2.5rem;
+}
+
+.author-content {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.author-image {
+  flex: 1;
+}
+
+.author-image img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.author-bio {
+  flex: 2;
+}
+
+.author-bio h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.author-bio p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}

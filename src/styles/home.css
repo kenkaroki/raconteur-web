@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 .home-container {
   width: 100%;
@@ -25,7 +24,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--background-color);
+  opacity: 0.8;
   z-index: 1;
 }
 
@@ -54,6 +54,20 @@
   padding: 1em 2.5em;
 }
 
+.hero-btn-secondary {
+  font-size: 1.2rem;
+  padding: 1em 2.5em;
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  margin-left: 1rem;
+}
+
+.hero-btn-secondary:hover {
+  background-color: white;
+  color: black;
+}
+
 .home-dark {
   color: black;
 }
@@ -63,51 +77,3 @@
 }
 
 /* Responsive adjustments */
-=======
-:root{
-    background-image: url('../assets/homepagebackground.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 0;
-    margin: 0;
-}
-h1 {
-    color: rgba(0, 0, 0, 0.806);
-    text-align: center;
-    font-size: 3em;
-    margin-top: 50px;
-    padding-bottom: 1em;
-}
-
-div{
-    width:80%;
-    margin-left: 08%;
-    margin-top: 0%;
-    margin-bottom: 2em;
-}
-
-a{
-    text-decoration: none;
-    color: #000;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-p{
-    font-size: x-large;
-    color: black
-}
-li{
-    font-size: x-large;
-    color: black;
-
-
-}
-
-button{
-    margin-bottom: 2em;
-    margin-top: 2em;
-
-}
-
->>>>>>> origin/main
